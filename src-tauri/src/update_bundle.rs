@@ -8,7 +8,7 @@ use plist::Value;
 use crate::update_archive::ExtractedArchive;
 use crate::update_manifest::{MANIFEST_PRODUCT_ID, TARGET_ARCHITECTURE};
 
-const APP_BUNDLE_NAME: &str = "Cornell Method Notebook.app";
+const APP_BUNDLE_NAME: &str = "Cuetrio.app";
 const CONTENTS_DIRECTORY_NAME: &str = "Contents";
 const INFO_PLIST_NAME: &str = "Info.plist";
 const MACOS_DIRECTORY_NAME: &str = "MacOS";
@@ -599,9 +599,8 @@ mod tests {
                 .expect("clock")
                 .as_nanos();
             let counter = NEXT_ROOT.fetch_add(1, Ordering::Relaxed);
-            let path = std::env::temp_dir().join(format!(
-                "cornell-method-update-bundle-{timestamp}-{counter}"
-            ));
+            let path =
+                std::env::temp_dir().join(format!("cuetrio-update-bundle-{timestamp}-{counter}"));
             fs::create_dir(&path).expect("test root");
             Self { path }
         }
@@ -1125,7 +1124,7 @@ mod tests {
     fn rejects_unsafe_relative_paths_and_required_entry_symlinks() {
         let root = TestRoot::new();
         let mut archive = extracted_archive();
-        archive.relative_app_path = PathBuf::from("../outside/Cornell Method Notebook.app");
+        archive.relative_app_path = PathBuf::from("../outside/Cuetrio.app");
         assert_code(
             validate_extracted_app_bundle(&archive, &root.path),
             "staging-path",

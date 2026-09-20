@@ -16,7 +16,7 @@ pub(crate) const MAX_MATERIAL_ENTRIES: usize = 250_000;
 pub(crate) const MAX_PATH_BYTES: usize = 1024;
 pub(crate) const MAX_SYMLINK_HOPS: usize = 16;
 
-const ROOT_NAME: &str = "Cornell Method Notebook.app";
+const ROOT_NAME: &str = "Cuetrio.app";
 const IO_BUFFER_BYTES: usize = 64 * 1024;
 const TAR_BLOCK_BYTES: usize = 512;
 
@@ -1588,9 +1588,8 @@ mod tests {
                 .expect("clock")
                 .as_nanos();
             let counter = NEXT_ROOT.fetch_add(1, Ordering::Relaxed);
-            let path = std::env::temp_dir().join(format!(
-                "cornell-method-update-archive-{timestamp}-{counter}"
-            ));
+            let path =
+                std::env::temp_dir().join(format!("cuetrio-update-archive-{timestamp}-{counter}"));
             fs::create_dir(&path).expect("test root");
             fs::create_dir(path.join("packages")).expect("packages");
             Self { path }
@@ -2005,33 +2004,17 @@ mod tests {
         let root = TestRoot::new();
         let cases = [
             (b"/tmp/outside".as_slice(), "archive-path", 0),
+            (b"Cuetrio.app/./file".as_slice(), "archive-path", 0),
+            (b"Cuetrio.app/../file".as_slice(), "archive-path", 0),
+            (b"Cuetrio.app//file".as_slice(), "archive-path", 0),
+            (b"Cuetrio.app/Contents\\bad".as_slice(), "archive-path", 0),
             (
-                b"Cornell Method Notebook.app/./file".as_slice(),
-                "archive-path",
-                0,
-            ),
-            (
-                b"Cornell Method Notebook.app/../file".as_slice(),
-                "archive-path",
-                0,
-            ),
-            (
-                b"Cornell Method Notebook.app//file".as_slice(),
-                "archive-path",
-                0,
-            ),
-            (
-                b"Cornell Method Notebook.app/Contents\\bad".as_slice(),
-                "archive-path",
-                0,
-            ),
-            (
-                b"Cornell Method Notebook.app/Contents/special".as_slice(),
+                b"Cuetrio.app/Contents/special".as_slice(),
                 "archive-special-file",
                 b'3',
             ),
             (
-                b"Cornell Method Notebook.app/Contents/hardlink".as_slice(),
+                b"Cuetrio.app/Contents/hardlink".as_slice(),
                 "archive-special-file",
                 b'1',
             ),

@@ -15,8 +15,8 @@ function disposableFixture() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "cornell-update-recovery-"));
   const support = path.join(root, "Application Support", "com.cornellmethod.notebook");
   const staging = path.join(support, "staging", "extract", "a".repeat(64));
-  const candidate = path.join(staging, "Cornell Method Notebook.app");
-  const current = path.join(root, "Cornell Method Notebook.app");
+  const candidate = path.join(staging, "Cuetrio.app");
+  const current = path.join(root, "Cuetrio.app");
   const live = path.join(support, "live", "notebook.sqlite");
   const backup = path.join(
     support,
@@ -51,7 +51,7 @@ function partialCleanupFixture() {
     staging,
     "extract",
     digest,
-    "Cornell Method Notebook.app",
+    "Cuetrio.app",
   );
   const packagePath = path.join(staging, "packages", `${digest}.app.tar.gz`);
   const migration = path.join(staging, "database-migrations", "migration.sql");
@@ -60,7 +60,7 @@ function partialCleanupFixture() {
     "backups",
     `notebook-${digest}-100-random.sqlite.bak`,
   );
-  const current = path.join(root, "Cornell Method Notebook.app");
+  const current = path.join(root, "Cuetrio.app");
   const live = path.join(support, "live", "notebook.sqlite");
 
   for (const directory of [

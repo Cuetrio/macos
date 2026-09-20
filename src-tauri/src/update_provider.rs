@@ -488,7 +488,7 @@ fn ipv6_prefix(value: u128, network: u128, prefix_length: u32) -> bool {
 }
 
 pub(crate) const GITHUB_RELEASES_MANIFEST_URL: &str =
-    "https://github.com/ka-akehi/Cornell-Method/releases/latest/download/cornell-method-notebook-update-manifest.json";
+    "https://github.com/Cuetrio/macos/releases/latest/download/cuetrio-update-manifest.json";
 pub(crate) const MANIFEST_FETCH_TIMEOUT: Duration = Duration::from_secs(15);
 pub(crate) const MAX_MANIFEST_REDIRECT_HOPS: usize = 5;
 pub(crate) const MAX_MANIFEST_BODY_BYTES: usize = 1_048_576;

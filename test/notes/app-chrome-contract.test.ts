@@ -92,15 +92,15 @@ test("desktop AppChrome は same-DOM sidebar と canonical route を共有する
   const mobileBrand = appChromeParts.slice(mobileBrandStart);
   assert.match(
     desktopIdentity,
-    /<Link[\s\S]*href="\/notes"[\s\S]*className="app-chrome-desktop-identity"[\s\S]*aria-label="Cornell Method Notebook ノート一覧へ"[\s\S]*<AppChromeBrandContent \/>/,
+    /<Link[\s\S]*href="\/notes"[\s\S]*className="app-chrome-desktop-identity"[\s\S]*aria-label="Cuetrio ノート一覧へ"[\s\S]*<AppChromeBrandContent \/>/,
   );
   assert.match(
     mobileBrand,
-    /<Link[\s\S]*href="\/notes"[\s\S]*className="app-chrome-brand"[\s\S]*aria-label="Cornell Method Notebook ノート一覧へ"/,
+    /<Link[\s\S]*href="\/notes"[\s\S]*className="app-chrome-brand"[\s\S]*aria-label="Cuetrio ノート一覧へ"/,
   );
   assert.match(
     appChromeParts,
-    /<span className="app-chrome-brand-title">Cornell Method Notebook<\/span>/,
+    /<span className="app-chrome-brand-title">Cuetrio<\/span>/,
   );
   assert.doesNotMatch(
     appChromeParts,

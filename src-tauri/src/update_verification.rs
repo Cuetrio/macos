@@ -745,7 +745,7 @@ mod tests {
     fn test_directory(label: &str) -> PathBuf {
         let counter = TEST_DIRECTORY_COUNTER.fetch_add(1, Ordering::Relaxed);
         let directory = std::env::temp_dir().join(format!(
-            "cornell-update-verification-{label}-{}-{counter}",
+            "cuetrio-update-verification-{label}-{}-{counter}",
             std::process::id()
         ));
         fs::create_dir_all(&directory).unwrap();
@@ -899,7 +899,7 @@ mod tests {
     }
 
     fn valid_update_archive(version: &str) -> Vec<u8> {
-        const ROOT: &str = "Cornell Method Notebook.app";
+        const ROOT: &str = "Cuetrio.app";
         const EXECUTABLE: &str = "CornellMethodNotebook";
         let plist = format!(
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?><plist version=\"1.0\"><dict><key>CFBundleIdentifier</key><string>{MANIFEST_PRODUCT_ID}</string><key>CFBundleShortVersionString</key><string>{version}</string><key>CFBundleExecutable</key><string>{EXECUTABLE}</string></dict></plist>"
@@ -1185,7 +1185,7 @@ mod tests {
             Some(
                 PathBuf::from("extract")
                     .join(&digest)
-                    .join("Cornell Method Notebook.app")
+                    .join("Cuetrio.app")
                     .as_path()
             )
         );
@@ -1199,12 +1199,12 @@ mod tests {
         assert!(staging
             .join("extract")
             .join(&digest)
-            .join("Cornell Method Notebook.app")
+            .join("Cuetrio.app")
             .is_dir());
         let resource_path = staging
             .join("extract")
             .join(&digest)
-            .join("Cornell Method Notebook.app/Contents/Resources/config.js");
+            .join("Cuetrio.app/Contents/Resources/config.js");
         assert_eq!(fs::read(&resource_path).unwrap(), b"archive resource");
         assert!(!staging
             .join("incoming")
@@ -1257,7 +1257,7 @@ mod tests {
             staging
                 .join("extract")
                 .join(&digest)
-                .join("Cornell Method Notebook.app")
+                .join("Cuetrio.app")
                 .join("Contents/Info.plist"),
         )
         .unwrap();
@@ -1278,7 +1278,7 @@ mod tests {
         assert!(staging
             .join("extract")
             .join(&digest)
-            .join("Cornell Method Notebook.app/Contents/Info.plist")
+            .join("Cuetrio.app/Contents/Info.plist")
             .is_file());
 
         assert_eq!(

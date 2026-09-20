@@ -1062,9 +1062,8 @@ mod tests {
                 .unwrap()
                 .as_nanos();
             let counter = NEXT_ROOT.fetch_add(1, Ordering::Relaxed);
-            let path = std::env::temp_dir().join(format!(
-                "cornell-method-update-download-{timestamp}-{counter}"
-            ));
+            let path =
+                std::env::temp_dir().join(format!("cuetrio-update-download-{timestamp}-{counter}"));
             fs::create_dir(&path).unwrap();
             Self { path }
         }

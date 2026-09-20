@@ -65,7 +65,7 @@ use update_verification::{
 use window_state::{restore_window_state, window_state_path};
 
 const PRIMARY_WINDOW_LABEL: &str = "primary";
-const PRIMARY_WINDOW_TITLE: &str = "Cornell Method Notebook";
+const PRIMARY_WINDOW_TITLE: &str = "Cuetrio";
 const DEFAULT_WINDOW_WIDTH: f64 = 1280.0;
 const DEFAULT_WINDOW_HEIGHT: f64 = 900.0;
 const DIAGNOSTIC_WEB_INSPECTOR_ENV: &str = "CORNELL_DESKTOP_DIAGNOSTIC_WEB_INSPECTOR";
@@ -617,7 +617,7 @@ fn main() {
         }
         Ok(InstanceAcquire::Focused) => {}
         Ok(InstanceAcquire::AlreadyRunningNotReady) => {
-            eprintln!("another Cornell Method Notebook instance is already running or preparing");
+            eprintln!("another Cuetrio instance is already running or preparing");
             std::process::exit(2);
         }
         Err(error) => {

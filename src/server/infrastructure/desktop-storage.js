@@ -1902,7 +1902,7 @@ function canonicalStagedExtractedAppPath(digest) {
   return path.join(
     "extract",
     digest,
-    "Cornell Method Notebook.app",
+    "Cuetrio.app",
   );
 }
 
@@ -1991,7 +1991,7 @@ function readApplyPreparationCandidate(storagePaths) {
   }
   requireDirectoryTree(
     stagingDirectory,
-    ["extract", digest, "Cornell Method Notebook.app"],
+    ["extract", digest, "Cuetrio.app"],
     "verified extracted app",
   );
 

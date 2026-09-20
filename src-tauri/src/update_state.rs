@@ -2306,9 +2306,7 @@ pub(crate) fn canonical_package_path(sha256: &str) -> Result<PathBuf, UpdateStat
 
 pub(crate) fn canonical_extracted_app_path(sha256: &str) -> Result<PathBuf, UpdateStateError> {
     validate_sha256(sha256)?;
-    Ok(PathBuf::from("extract")
-        .join(sha256)
-        .join("Cornell Method Notebook.app"))
+    Ok(PathBuf::from("extract").join(sha256).join("Cuetrio.app"))
 }
 
 #[derive(Clone, Copy)]
@@ -2728,7 +2726,7 @@ mod tests {
     fn test_directory(label: &str) -> PathBuf {
         let counter = TEMP_FILE_COUNTER.fetch_add(1, Ordering::Relaxed);
         let directory = std::env::temp_dir().join(format!(
-            "cornell-update-state-{label}-{}-{counter}",
+            "cuetrio-update-state-{label}-{}-{counter}",
             std::process::id()
         ));
         fs::create_dir_all(&directory).unwrap();
@@ -2788,7 +2786,7 @@ mod tests {
             relative_app_path: extracted_archive.relative_app_path.clone(),
             bundle_identifier: MANIFEST_PRODUCT_ID.to_string(),
             version: "1.2.3".to_string(),
-            executable_filename: "Cornell Method Notebook".to_string(),
+            executable_filename: "Cuetrio".to_string(),
             architecture: "aarch64-apple-darwin",
         };
         store.record_package_checkpoint(&verified_archive).unwrap();
@@ -3406,7 +3404,7 @@ mod tests {
         assert_eq!(
             verified_before.extracted_app_path,
             Some(PathBuf::from(
-                "extract/0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef/Cornell Method Notebook.app"
+                "extract/0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef/Cuetrio.app"
             ))
         );
 

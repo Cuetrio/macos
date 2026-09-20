@@ -242,7 +242,7 @@ test("recovery UI does not add a remote dependency or expose private data", () =
   assert.doesNotMatch(source, /(?:innerHTML|outerHTML|insertAdjacentHTML)/);
   assert.doesNotMatch(source, /console\.(?:log|error|warn)|JSON\.stringify/);
   assert.doesNotMatch(source, /(?:error|exception)\.(?:message|stack)/i);
-  assert.doesNotMatch(source, /note(?:Title|Body|Content)|cue|summary|canvasJson/i);
+  assert.doesNotMatch(source, /note(?:Title|Body|Content)|\bcue\b|summary|canvasJson/i);
   assert.match(source, /pendingRestore = \{ pendingId: status\.pending\.pendingId, manifestToken: status\.pending\.manifestToken \}/);
   assert.doesNotMatch(source, /textContent\s*=\s*[^;]*(?:pendingId|manifestToken)/);
 });

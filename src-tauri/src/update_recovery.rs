@@ -19,12 +19,12 @@ use crate::update_state::{
     UpdateStateStore, VerificationState,
 };
 
-const APP_BUNDLE_NAME: &str = "Cornell Method Notebook.app";
+const APP_BUNDLE_NAME: &str = "Cuetrio.app";
 const CONTENTS_DIRECTORY_NAME: &str = "Contents";
 const MACOS_EXECUTABLE_DIRECTORY_NAME: &str = "MacOS";
-const BUNDLE_ROLLBACK_PREFIX: &str = ".Cornell Method Notebook.rollback-";
-const BUNDLE_SWITCH_PREFIX: &str = ".Cornell Method Notebook.switch-";
-const BUNDLE_FAILED_PREFIX: &str = ".Cornell Method Notebook.failed-";
+const BUNDLE_ROLLBACK_PREFIX: &str = ".Cuetrio.rollback-";
+const BUNDLE_SWITCH_PREFIX: &str = ".Cuetrio.switch-";
+const BUNDLE_FAILED_PREFIX: &str = ".Cuetrio.failed-";
 const DATABASE_RESTORE_PREFIX: &str = ".notebook.sqlite.restore-";
 const DATABASE_ORIGINAL_PREFIX: &str = ".notebook.sqlite.original-";
 const DATABASE_MIGRATION_DIRECTORY_NAME: &str = "database-migrations";
@@ -2318,9 +2318,8 @@ mod tests {
                 .expect("clock")
                 .as_nanos();
             let counter = NEXT_ROOT.fetch_add(1, Ordering::Relaxed);
-            let path = std::env::temp_dir().join(format!(
-                "cornell-method-update-recovery-{timestamp}-{counter}"
-            ));
+            let path =
+                std::env::temp_dir().join(format!("cuetrio-update-recovery-{timestamp}-{counter}"));
             fs::create_dir(&path).expect("test root");
             Self { path }
         }
