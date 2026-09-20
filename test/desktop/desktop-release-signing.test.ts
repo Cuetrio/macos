@@ -39,7 +39,7 @@ function writeMachOFixture(appPath, relativePath) {
 
 function writeAppFixture() {
   const directory = temporaryDirectory();
-  const appPath = path.join(directory, "Cornell Method Notebook.app");
+  const appPath = path.join(directory, "Cuetrio.app");
   fs.mkdirSync(path.join(appPath, RUNTIME_DIRECTORY), { recursive: true });
   for (const relativePath of REQUIRED_RUNTIME_NATIVE_EXECUTABLES) {
     writeMachOFixture(appPath, relativePath);
@@ -315,20 +315,20 @@ test("release npm entrypoint requires explicit app, DMG, and identity arguments"
   assert.deepEqual(
     parseArguments([
       "--app",
-      "release/Notebook.app",
+      "release/Cuetrio.app",
       "--dmg",
       "release/Notebook.dmg",
       "--identity",
       "Developer ID Application: Example (TEAM123)",
     ]),
     {
-      app: "release/Notebook.app",
+      app: "release/Cuetrio.app",
       dmg: "release/Notebook.dmg",
       identity: "Developer ID Application: Example (TEAM123)",
     },
   );
   assert.deepEqual(parseArguments(["--help"]), { help: true });
-  assert.throws(() => parseArguments(["--app", "release/Notebook.app"]), /requires a value|Usage/);
+    assert.throws(() => parseArguments(["--app", "release/Cuetrio.app"]), /requires a value|Usage/);
   assert.deepEqual(
     signCommand("Developer ID Application: Example (TEAM123)", "/tmp/app"),
     [
@@ -349,7 +349,7 @@ test("release npm entrypoint requires explicit app, DMG, and identity arguments"
 });
 
 test("release npm entrypoint passes app, DMG, and identity to the release signer", () => {
-  const appPath = "release/Notebook.app";
+  const appPath = "release/Cuetrio.app";
   const dmgPath = "release/Notebook.dmg";
   const identity = "Developer ID Application: Example (TEAM123)";
   let receivedOptions;

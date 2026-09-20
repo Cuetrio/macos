@@ -10,7 +10,7 @@ import {
 } from "@/server/auth/basic-auth";
 
 const UNAUTHORIZED_HEADERS = {
-  "WWW-Authenticate": 'Basic realm="Cornell Method Notebook", charset="UTF-8"',
+  "WWW-Authenticate": 'Basic realm="Cuetrio", charset="UTF-8"',
   "Cache-Control": "no-store",
   Vary: "Authorization",
 };

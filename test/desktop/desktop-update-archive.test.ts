@@ -38,7 +38,7 @@ test("desktop update archive module has a bounded library-only extraction bounda
   assert.match(source, /MAX_MATERIAL_ENTRIES: usize = 250_000/);
   assert.match(source, /MAX_PATH_BYTES: usize = 1024/);
   assert.match(source, /MAX_SYMLINK_HOPS: usize = 16/);
-  assert.match(source, /Cornell Method Notebook\.app/);
+  assert.match(source, /Cuetrio\.app/);
   assert.match(source, /fs::rename\(&temporary_directory, &ready_directory\)/);
   assert.match(source, /create_new\(true\)/);
   assert.match(source, /O_NOFOLLOW/);

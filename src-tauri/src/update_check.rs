@@ -320,7 +320,7 @@ mod tests {
     fn test_directory(label: &str) -> PathBuf {
         let counter = TEST_DIRECTORY_COUNTER.fetch_add(1, Ordering::Relaxed);
         let directory = std::env::temp_dir().join(format!(
-            "cornell-update-check-{label}-{}-{counter}",
+            "cuetrio-update-check-{label}-{}-{counter}",
             std::process::id()
         ));
         fs::create_dir_all(&directory).unwrap();

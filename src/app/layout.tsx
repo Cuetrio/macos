@@ -5,7 +5,7 @@ import { THEME_INITIALIZER_SCRIPT } from "./_components/theme/theme";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Cornell Method Notebook",
+  title: "Cuetrio",
   description: "コーネルメソッドノート記録アプリ",
 };
 

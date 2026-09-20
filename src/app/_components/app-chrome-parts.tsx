@@ -238,7 +238,7 @@ function AppChromeBrandContent() {
         C
       </span>
       <span className="app-chrome-brand-copy">
-        <span className="app-chrome-brand-title">Cornell Method Notebook</span>
+        <span className="app-chrome-brand-title">Cuetrio</span>
       </span>
     </>
   );
@@ -249,7 +249,7 @@ export function AppChromeDesktopIdentity() {
     <Link
       href="/notes"
       className="app-chrome-desktop-identity"
-      aria-label="Cornell Method Notebook ノート一覧へ"
+      aria-label="Cuetrio ノート一覧へ"
     >
       <AppChromeBrandContent />
     </Link>
@@ -261,7 +261,7 @@ export function AppChromeBrand() {
     <Link
       href="/notes"
       className="app-chrome-brand"
-      aria-label="Cornell Method Notebook ノート一覧へ"
+      aria-label="Cuetrio ノート一覧へ"
     >
       <AppChromeBrandContent />
     </Link>

@@ -1,8 +1,8 @@
 [package]
 name = "cornell-method-notebook"
 version = "0.1.0"
-description = "Cornell Method Notebook Desktop Alpha shell"
-authors = ["Cornell Method Notebook"]
+description = "Cuetrio Desktop Alpha shell"
+authors = ["Cuetrio"]
 edition = "2021"
 build = "build.rs"
 

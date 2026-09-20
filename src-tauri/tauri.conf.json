@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Cornell Method Notebook",
+  "productName": "Cuetrio",
   "version": "0.1.0",
   "identifier": "com.cornellmethod.notebook",
   "build": {
@@ -19,8 +19,8 @@
     "active": true,
     "targets": ["app", "dmg"],
     "category": "Productivity",
-    "shortDescription": "Cornell Method Notebook desktop application",
-    "longDescription": "A local-first Cornell Method notebook for macOS.",
+    "shortDescription": "Cuetrio desktop application",
+    "longDescription": "A local-first note-taking application for macOS.",
     "icon": ["icons/icon@2x.png"],
     "resources": {
       "../.desktop-runtime/node": "runtime/node",

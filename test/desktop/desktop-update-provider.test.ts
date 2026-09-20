@@ -19,7 +19,7 @@ test("desktop update provider binds the fixed GitHub Releases manifest endpoint"
 
   assert.match(
     source,
-    /GITHUB_RELEASES_MANIFEST_URL: &str =\s*"https:\/\/github\.com\/ka-akehi\/Cornell-Method\/releases\/latest\/download\/cornell-method-notebook-update-manifest\.json"/,
+    /GITHUB_RELEASES_MANIFEST_URL: &str =\s*"https:\/\/github\.com\/Cuetrio\/macos\/releases\/latest\/download\/cuetrio-update-manifest\.json"/,
   );
   assert.match(source, /trait ManifestHttpTransport/);
   assert.match(source, /trait PublicAddressResolver/);

@@ -117,7 +117,7 @@ function createCandidate(homeDirectory, { pending = false, migrationMode = "succ
     stagingDirectory,
     "extract",
     candidateDigest,
-    "Cornell Method Notebook.app",
+    "Cuetrio.app",
   );
   const runtimeDirectory = path.join(appPath, "Contents", "Resources", "runtime");
   fs.mkdirSync(runtimeDirectory, { recursive: true, mode: 0o700 });
@@ -178,7 +178,7 @@ function createCandidate(homeDirectory, { pending = false, migrationMode = "succ
     extractedAppPath: path.posix.join(
       "extract",
       candidateDigest,
-      "Cornell Method Notebook.app",
+      "Cuetrio.app",
     ),
     discoveredAt: 100,
     verifiedAt: 101,
