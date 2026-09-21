@@ -12,23 +12,23 @@ Use this skill to run a local design loop for the Cornell Method Notebook app. T
 Before making design decisions, read the smallest relevant set from:
 
 - `AGENTS.md`
-- `doc/screens/MVP_SCREEN_DESIGN.md`
-- `doc/screens/MVP_SCREEN_INVENTORY.md`
-- `doc/workflows/MVP_WORKFLOW_DESIGN.md`
-- `doc/requirements/MVP_SYSTEM_SPEC.md`
-- `doc/technical/MVP_DESIGN_TOOLING_GUIDE.md`
+- `../product/doc/macos/screens/MVP_SCREEN_DESIGN.md`
+- `../product/doc/macos/screens/MVP_SCREEN_INVENTORY.md`
+- `../product/doc/macos/workflows/MVP_WORKFLOW_DESIGN.md`
+- `../product/doc/common/requirements/MVP_SYSTEM_SPEC.md`
+- `../product/doc/macos/technical/MVP_DESIGN_TOOLING_GUIDE.md`
 - Related route/component files under `src/app/`
 
 For implementation tasking, also read:
 
-- `codex-queue/README.md`
-- `codex-queue/prompts/manager-codex.md`
+- `../product/development/codex-queue/README.md`
+- `../product/development/codex-queue/prompts/manager-codex.md`
 
 ## Workflow
 
 1. Intake
    - Capture the target screen, user goal, MVP / Phase 2 boundary, constraints, and existing references.
-   - Use `doc/design-studio/templates/design-brief.md` when a durable brief is useful.
+   - Use `../product/templates/design-studio/design-brief.md` when a durable brief is useful.
 
 2. Generate Options
    - Produce 2 or 3 text wireframe variants when the screen direction is unclear.
@@ -37,12 +37,12 @@ For implementation tasking, also read:
 
 3. Review
    - Compare variants against the MVP design docs, accessibility, local personal-use workflow, validation states, empty states, error states, and mobile layout.
-   - Record decisions with `doc/design-studio/templates/variant-review.md` when the choice should be auditable.
+   - Record decisions with `../product/templates/design-studio/variant-review.md` when the choice should be auditable.
 
 4. Handoff
    - Convert the selected option into either a Worker task or a direct implementation plan.
-   - Use `doc/design-studio/templates/implementation-handoff.md` for implementation-ready details.
-   - UI implementation belongs in `codex-queue/tasks-ui`; API or Prisma work belongs in `codex-queue/tasks-api`; docs and cross-cutting work belongs in `codex-queue/tasks`.
+   - Use `../product/templates/design-studio/implementation-handoff.md` for implementation-ready details.
+- UI implementation belongs in `../product/development/codex-queue/tasks-ui`; API or Prisma work belongs in `../product/development/codex-queue/tasks-api`; docs and cross-cutting work belongs in `../product/development/codex-queue/tasks`.
 
 5. Verify
    - Prefer browser verification for UI changes when a dev server can run.

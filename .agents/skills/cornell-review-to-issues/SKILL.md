@@ -66,10 +66,10 @@ order:
 
 1. Root `AGENTS.md`.
 2. The latest handoff referenced by `AGENTS.md`.
-3. `doc/implementation/MVP_CONTRACT.md`.
-4. `doc/technical/TARGET_ARCHITECTURE.md`.
-5. `doc/implementation/IMPLEMENTATION_STATUS.md`.
-6. Relevant `doc/testing/TEST_SCENARIOS.md` sections.
+3. `../product/doc/macos/implementation/MVP_CONTRACT.md`.
+4. `../product/doc/macos/technical/TARGET_ARCHITECTURE.md`.
+5. `../product/doc/macos/implementation/IMPLEMENTATION_STATUS.md`.
+6. Relevant `../product/doc/macos/testing/TEST_SCENARIOS.md` sections.
 7. `.agents/skills/cornell-code-review/SKILL.md` and its checklist when present.
 
 Apply the repository's precedence rules:

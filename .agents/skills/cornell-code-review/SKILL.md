@@ -80,16 +80,16 @@ instructions and current contracts in this order:
 
 1. Root `AGENTS.md`.
 2. The current handoff file referenced by `AGENTS.md` under "最新引き継ぎ".
-3. `doc/requirements/PRODUCT_SPEC.md` for product principles, roadmap, and the
+3. `../product/doc/common/requirements/PRODUCT_SPEC.md` for product principles, roadmap, and the
    local-first / desktop boundary.
-4. `doc/requirements/MVP_SYSTEM_SPEC.md` for current MVP business and functional
+4. `../product/doc/common/requirements/MVP_SYSTEM_SPEC.md` for current MVP business and functional
    requirements.
-5. `doc/implementation/MVP_CONTRACT.md` for current MVP implementation and
+5. `../product/doc/macos/implementation/MVP_CONTRACT.md` for current MVP implementation and
    acceptance behavior.
-6. `doc/technical/TARGET_ARCHITECTURE.md` for placement and dependency rules.
-7. `doc/implementation/IMPLEMENTATION_STATUS.md` for implemented, partial, and
+6. `../product/doc/macos/technical/TARGET_ARCHITECTURE.md` for placement and dependency rules.
+7. `../product/doc/macos/implementation/IMPLEMENTATION_STATUS.md` for implemented, partial, and
    runtime-unverified boundaries.
-8. Relevant sections of `doc/testing/TEST_SCENARIOS.md` for changed behavior.
+8. Relevant sections of `../product/doc/macos/testing/TEST_SCENARIOS.md` for changed behavior.
 9. More specific `AGENTS.md` files and design documents when they govern the
    changed files. Summaries, handoffs, and task records may supply context but
    remain excluded review targets.

@@ -26,8 +26,8 @@
 
 実装判断とレビューでは、変更内容に応じて次の正本を優先します。
 
-- 現行MVP契約: `doc/implementation/MVP_CONTRACT.md`
-- Target Architecture: `doc/technical/TARGET_ARCHITECTURE.md`
-- 実装状況: `doc/implementation/IMPLEMENTATION_STATUS.md`
-- テスト観点: `doc/testing/TEST_SCENARIOS.md`
+- 現行MVP契約: `../product/doc/macos/implementation/MVP_CONTRACT.md`
+- Target Architecture: `../product/doc/macos/technical/TARGET_ARCHITECTURE.md`
+- 実装状況: `../product/doc/macos/implementation/IMPLEMENTATION_STATUS.md`
+- テスト観点: `../product/doc/macos/testing/TEST_SCENARIOS.md`
 - 製品ロードマップ: `AGENTS.md`

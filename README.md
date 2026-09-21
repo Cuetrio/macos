@@ -17,11 +17,11 @@ MVP の主な機能:
 
 ## 現行の状態と作業入口
 
-2026-08-08 時点の実装状態は [`doc/implementation/IMPLEMENTATION_STATUS.md`](doc/implementation/IMPLEMENTATION_STATUS.md) で確認します。
+2026-08-08 時点の実装状態は [`product/doc/macos/implementation/IMPLEMENTATION_STATUS.md`](../product/doc/macos/implementation/IMPLEMENTATION_STATUS.md) で確認します。
 
-MVP の受け入れ項目と確認済み範囲は [`doc/testing/TEST_SCENARIOS.md`](doc/testing/TEST_SCENARIOS.md) のチェックリストと受け入れ証跡マトリクスで確認します。
+MVP の受け入れ項目と確認済み範囲は [`product/doc/macos/testing/TEST_SCENARIOS.md`](../product/doc/macos/testing/TEST_SCENARIOS.md) のチェックリストと受け入れ証跡マトリクスで確認します。
 
-最新の Browser runtime QA の制約、再開条件、`Next Read` は [`HANDOFF_2026-08-08.md`](HANDOFF_2026-08-08.md) に記録しています。
+最新の Browser runtime QA の制約、再開条件、`Next Read` は product 側の macOS handoff に記録しています。
 
 Gate 0（人力 MVP 結合テスト）は未通過です。
 
@@ -29,7 +29,7 @@ Gate 0（人力 MVP 結合テスト）は未通過です。
 
 過去の screenshot、静的確認、部分的な runtime 確認、queue の完了表示だけでは Gate 0 の通過と判定しません。
 
-Gate 0 の完了条件と、その後の実装順は [`doc/implementation/POST_MVP_IMPLEMENTATION_PLAN.md`](doc/implementation/POST_MVP_IMPLEMENTATION_PLAN.md) を参照します。
+Gate 0 の完了条件と、その後の実装順は [`product/doc/macos/implementation/POST_MVP_IMPLEMENTATION_PLAN.md`](../product/doc/macos/implementation/POST_MVP_IMPLEMENTATION_PLAN.md) を参照します。
 
 Gate 0 を発注者が明示的に閉じるまで、Phase 2、Mac desktop、PDF export、部分消しゴムなどの coding task を投入しません。
 
@@ -114,11 +114,11 @@ http://localhost:3000/notes
 
 ## MVP 受け入れ材料
 
-受け入れ証跡の正本は [受け入れ証跡マトリクス](doc/testing/TEST_SCENARIOS.md#受け入れ証跡マトリクス) です。各記録には、route、画面状態、viewport または API / CLI / 静的照合、確認日、fixture の扱い、判定、参照 summary / 根拠を記載しています。
+受け入れ証跡の正本は [受け入れ証跡マトリクス](../product/doc/macos/testing/TEST_SCENARIOS.md#受け入れ証跡マトリクス) です。各記録には、route、画面状態、viewport または API / CLI / 静的照合、確認日、fixture の扱い、判定、参照 product summary / 根拠を記載しています。
 
-2026-07-05 時点の MVP 主要 UI フローは Playwright Chromium で検証済みです。確認結果は `summary/20260705/mvp-ui-flow-reverification-report.md` を参照してください。この PASS の対象は当時の route-level flow であり、Canvas 導入後の現行 UI に対する Gate 0 の証拠ではありません。NTE-020 の edit レイアウト全 viewport 確認と NTE-030 の mobile runtime 確認も含みません。
+2026-07-05 時点の MVP 主要 UI フローは Playwright Chromium で検証済みです。確認結果は `../product/summary/macos/20260705/mvp-ui-flow-reverification-report.md` を参照してください。この PASS の対象は当時の route-level flow であり、Canvas 導入後の現行 UI に対する Gate 0 の証拠ではありません。NTE-020 の edit レイアウト全 viewport 確認と NTE-030 の mobile runtime 確認も含みません。
 
-実操作デモ（Canvas 導入前の履歴）: [一覧 → 詳細 → 編集 → 保存 → 閲覧 / 再読込（WebM）](doc/assets/demos/mvp-note-flow.webm)（1280 × 900）。
+実操作デモ（Canvas 導入前の履歴）: [一覧 → 詳細 → 編集 → 保存 → 閲覧 / 再読込（WebM）](../product/doc/macos/assets/demos/mvp-note-flow.webm)（1280 × 900）。
 
 次の画面例は Canvas 導入前の Markdown 本文 UI を含む履歴資料です。現行の新規本文を textarea / preview とする仕様や、現行 Canvas UI の runtime PASS を示すものではありません。
 
@@ -126,10 +126,10 @@ http://localhost:3000/notes
 
 | 画面 | スクリーンショット |
 | --- | --- |
-| `/notes`: ノート一覧、検索、日付 / タグフィルタ、範囲 validation | [1440px](doc/assets/screenshots/runtime-notes-list-1440.png) |
-| `/notes/new`: Canvas 導入前の新規作成、既存タグ候補選択、自由入力タグ追加 | [375px](doc/assets/screenshots/nte020-policy-c-new-375.png) / [768px](doc/assets/screenshots/nte020-policy-c-new-768.png) / [1280px](doc/assets/screenshots/nte020-policy-c-new-1280.png) / [1440px](doc/assets/screenshots/nte020-policy-c-new-1440.png) |
-| `/notes/[id]`: Canvas 導入前の閲覧、編集保存、復習モード、削除 | [閲覧 1440px](doc/assets/screenshots/runtime-note-detail-view-1440.png) / [編集保存 1440px（主要 UI flow）](doc/assets/screenshots/runtime-note-detail-edit-1440.png) / [復習 1440px](doc/assets/screenshots/runtime-note-detail-review-1440.png) |
-| `/backup`: バックアップ一覧表示、バックアップ作成 | [1440px](doc/assets/screenshots/runtime-backup-1440.png) |
+| `/notes`: ノート一覧、検索、日付 / タグフィルタ、範囲 validation | [1440px](../product/doc/macos/assets/screenshots/runtime-notes-list-1440.png) |
+| `/notes/new`: Canvas 導入前の新規作成、既存タグ候補選択、自由入力タグ追加 | [375px](../product/doc/macos/assets/screenshots/nte020-policy-c-new-375.png) / [768px](../product/doc/macos/assets/screenshots/nte020-policy-c-new-768.png) / [1280px](../product/doc/macos/assets/screenshots/nte020-policy-c-new-1280.png) / [1440px](../product/doc/macos/assets/screenshots/nte020-policy-c-new-1440.png) |
+| `/notes/[id]`: Canvas 導入前の閲覧、編集保存、復習モード、削除 | [閲覧 1440px](../product/doc/macos/assets/screenshots/runtime-note-detail-view-1440.png) / [編集保存 1440px（主要 UI flow）](../product/doc/macos/assets/screenshots/runtime-note-detail-edit-1440.png) / [復習 1440px](../product/doc/macos/assets/screenshots/runtime-note-detail-review-1440.png) |
+| `/backup`: バックアップ一覧表示、バックアップ作成 | [1440px](../product/doc/macos/assets/screenshots/runtime-backup-1440.png) |
 
 ### NTE-030 runtime screenshot の確認内容（Canvas 導入前の履歴）
 
@@ -152,12 +152,12 @@ NTE-020 方針Cの旧 Markdown 新規ノート作成画面を確認したスク�
 
 | Viewport | 確認内容 | スクリーンショット |
 | --- | --- | --- |
-| 375px | Cornell部分のみ横スクロールを許容。 | ![NTE-020 方針C 新規作成 375px](doc/assets/screenshots/nte020-policy-c-new-375.png) |
-| 768px | タブレット幅での新規作成画面。 | ![NTE-020 方針C 新規作成 768px](doc/assets/screenshots/nte020-policy-c-new-768.png) |
-| 1280px | Cue / Note 約30% / 70%、旧本文 textarea と Markdown Preview の横並び。 | ![NTE-020 方針C 新規作成 1280px](doc/assets/screenshots/nte020-policy-c-new-1280.png) |
-| 1440px | Cue / Note 約30% / 70%、旧本文 textarea と Markdown Preview の横並び。 | ![NTE-020 方針C 新規作成 1440px](doc/assets/screenshots/nte020-policy-c-new-1440.png) |
+| 375px | Cornell部分のみ横スクロールを許容。 | ![NTE-020 方針C 新規作成 375px](../product/doc/macos/assets/screenshots/nte020-policy-c-new-375.png) |
+| 768px | タブレット幅での新規作成画面。 | ![NTE-020 方針C 新規作成 768px](../product/doc/macos/assets/screenshots/nte020-policy-c-new-768.png) |
+| 1280px | Cue / Note 約30% / 70%、旧本文 textarea と Markdown Preview の横並び。 | ![NTE-020 方針C 新規作成 1280px](../product/doc/macos/assets/screenshots/nte020-policy-c-new-1280.png) |
+| 1440px | Cue / Note 約30% / 70%、旧本文 textarea と Markdown Preview の横並び。 | ![NTE-020 方針C 新規作成 1440px](../product/doc/macos/assets/screenshots/nte020-policy-c-new-1440.png) |
 
-過去の画面資料を再現する必要がある場合は、開発サーバーを起動してから主要画面を開き、画像を `doc/assets/screenshots/` 配下へ保存してください。
+過去の画面資料を再現する必要がある場合は、開発サーバーを起動してから主要画面を開き、画像を product 側の `doc/macos/assets/screenshots/` 配下へ保存してください。
 
 この手順は、旧画面資料の再現方法を残したものです。
 
@@ -270,18 +270,18 @@ npm run build
 
 MVP の仕様と設計は、次の文書を参照してください。
 
-- `doc/README.md`
-- `doc/requirements/PRODUCT_SPEC.md`
-- `doc/requirements/MVP_SYSTEM_SPEC.md`
-- `doc/implementation/MVP_CONTRACT.md`
-- `doc/workflows/MVP_WORKFLOW_DESIGN.md`
-- `doc/screens/MVP_SCREEN_INVENTORY.md`
-- `doc/diagrams/MVP_UML_DESIGN.md`
-- `doc/technical/MVP_DESIGN_TOOLING_GUIDE.md`
-- `doc/design-studio/README.md`
-- `doc/api/MVP_API_DESIGN.md`
-- `doc/data/MVP_DATA_DESIGN.md`
-- `doc/testing/TEST_SCENARIOS.md`
+- `../product/doc/common/README.md`
+- `../product/doc/common/requirements/PRODUCT_SPEC.md`
+- `../product/doc/common/requirements/MVP_SYSTEM_SPEC.md`
+- `../product/doc/macos/implementation/MVP_CONTRACT.md`
+- `../product/doc/macos/workflows/MVP_WORKFLOW_DESIGN.md`
+- `../product/doc/macos/screens/MVP_SCREEN_INVENTORY.md`
+- `../product/doc/macos/diagrams/MVP_UML_DESIGN.md`
+- `../product/doc/macos/technical/MVP_DESIGN_TOOLING_GUIDE.md`
+- `../product/doc/common/design-studio/README.md`
+- `../product/doc/macos/api/MVP_API_DESIGN.md`
+- `../product/doc/macos/data/MVP_DATA_DESIGN.md`
+- `../product/doc/macos/testing/TEST_SCENARIOS.md`
 
 ## Design Studio
 
@@ -294,7 +294,7 @@ codex plugin marketplace add /Users/kazuya/Desktop/自己学習/Cornell-Method
 codex plugin add cornell-design-studio@cornell-method-local
 ```
 
-運用手順とテンプレートは `doc/design-studio/README.md` を参照してください。
+運用手順とテンプレートは `../product/doc/common/design-studio/README.md` を参照してください。
 
 ## 既知の注意
 
@@ -310,7 +310,7 @@ MVP では次の機能は対象外です。
 
 `NoteCard`、`CueCard`、`NoteCueLink` は現行 MVP に存在しません。Canvas 本文との関係は Phase 2 の未決事項であり、Gate 0 通過後に Canvas 維持、カード併用、カード不採用を比較します。legacy `Notebook.body` の order 0 カード化や Canvas からの自動変換は決定していません。
 
-部分消しゴムは [`doc/designs/CANVAS_PARTIAL_ERASER_DESIGN.md`](doc/designs/CANVAS_PARTIAL_ERASER_DESIGN.md) の将来提案です。
+部分消しゴムは [`product/doc/macos/designs/CANVAS_PARTIAL_ERASER_DESIGN.md`](../product/doc/macos/designs/CANVAS_PARTIAL_ERASER_DESIGN.md) の将来提案です。
 
 Gate 0 通過後に現行パスと正本の状態を再確認してから、投入可否を判断します。
 

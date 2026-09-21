@@ -1,7 +1,0 @@
-tasks/**/*.task.md
-tasks-ui/**/*.task.md
-tasks-api/**/*.task.md
-/.state/
-!tasks/**/.gitkeep
-!tasks-ui/**/.gitkeep
-!tasks-api/**/.gitkeep

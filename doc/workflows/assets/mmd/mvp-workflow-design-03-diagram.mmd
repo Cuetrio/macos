@@ -1,9 +1,0 @@
-flowchart TD
-  Start["ノート詳細を閲覧"] --> DeleteClick["削除を選択"]
-  DeleteClick --> Confirm{"本当に削除するか"}
-  Confirm -- "いいえ" --> Keep["削除せず閲覧へ戻る"]
-  Confirm -- "はい" --> BackupCheck{"削除前バックアップは必要か"}
-  BackupCheck -- "必要" --> CreateBackup["/backup でバックアップ作成"]
-  BackupCheck -- "不要" --> Delete
-  CreateBackup --> Delete["DELETE /api/notes/:id"]
-  Delete --> Removed["削除完了・一覧へ戻る"]

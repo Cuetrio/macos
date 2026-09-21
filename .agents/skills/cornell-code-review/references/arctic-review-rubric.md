@@ -31,13 +31,13 @@ Reconstruct intent before using the diff body as evidence. Prefer, in order:
 2. pull-request title and body;
 3. linked Issue, acceptance criteria, and approved design decisions;
 4. current canonical repository contracts:
-   - `doc/requirements/PRODUCT_SPEC.md` for product principles and roadmap;
-   - `doc/requirements/MVP_SYSTEM_SPEC.md` for current MVP business and
+   - `../product/doc/common/requirements/PRODUCT_SPEC.md` for product principles and roadmap;
+   - `../product/doc/common/requirements/MVP_SYSTEM_SPEC.md` for current MVP business and
      functional requirements;
-   - `doc/implementation/MVP_CONTRACT.md` for current MVP implementation and
+   - `../product/doc/macos/implementation/MVP_CONTRACT.md` for current MVP implementation and
      acceptance behavior;
-   - `doc/technical/TARGET_ARCHITECTURE.md` for placement and dependency rules;
-   - relevant `doc/testing/TEST_SCENARIOS.md` for verification expectations;
+   - `../product/doc/macos/technical/TARGET_ARCHITECTURE.md` for placement and dependency rules;
+   - relevant `../product/doc/macos/testing/TEST_SCENARIOS.md` for verification expectations;
 5. agent plan or conversation when it is available and authoritative.
 
 Do not infer the intended scope from the final diff itself. The diff is evidence

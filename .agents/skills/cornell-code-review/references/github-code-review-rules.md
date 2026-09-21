@@ -37,7 +37,7 @@
 
 ### Current MVP contract
 
-- Treat `doc/implementation/MVP_CONTRACT.md` as the source of truth for current
+- Treat `../product/doc/macos/implementation/MVP_CONTRACT.md` as the source of truth for current
   routes, APIs, save, delete, review, Canvas, and acceptance behavior. Flag a
   change that silently alters those contracts or mixes Phase 2 work such as
   autosave, soft delete/Undo, dedicated review tasks, NoteCard/D&D, PDF export,
