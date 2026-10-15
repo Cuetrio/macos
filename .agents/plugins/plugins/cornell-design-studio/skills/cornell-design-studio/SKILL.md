@@ -21,8 +21,7 @@ Before making design decisions, read the smallest relevant set from:
 
 For implementation tasking, also read:
 
-- `../product/development/codex-queue/README.md`
-- `../product/development/codex-queue/prompts/manager-codex.md`
+- `../product/development/AGENTS.md`
 
 ## Workflow
 
@@ -42,7 +41,7 @@ For implementation tasking, also read:
 4. Handoff
    - Convert the selected option into either a Worker task or a direct implementation plan.
    - Use `../product/templates/design-studio/implementation-handoff.md` for implementation-ready details.
-- UI implementation belongs in `../product/development/codex-queue/tasks-ui`; API or Prisma work belongs in `../product/development/codex-queue/tasks-api`; docs and cross-cutting work belongs in `../product/development/codex-queue/tasks`.
+- Start the shared Worker platform from home with `cd ~ && make cornell codex` or `cd ~ && make cornell claude`. Check with `cd ~ && make cornell status`; stop with `cd ~ && make cornell stop`. Preserve the implementation repository and product summary boundaries.
 
 5. Verify
    - Prefer browser verification for UI changes when a dev server can run.

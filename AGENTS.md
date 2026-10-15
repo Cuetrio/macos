@@ -10,7 +10,6 @@
 - 実装状況: [`product/doc/macos/implementation/IMPLEMENTATION_STATUS.md`](../product/doc/macos/implementation/IMPLEMENTATION_STATUS.md)
 - テスト観点: [`product/doc/macos/testing/TEST_SCENARIOS.md`](../product/doc/macos/testing/TEST_SCENARIOS.md)
 - 設計書一覧: [`product/doc/common/README.md`](../product/doc/common/README.md)
-- Manager / Worker 運用: [`product/development/codex-queue/README.md`](../product/development/codex-queue/README.md)
 - 共通開発ルール: [`product/development/AGENTS.md`](../product/development/AGENTS.md)
 - Task Summary 運用: [`product/summary/README.md`](../product/summary/README.md)
 - 最新引き継ぎ: [`product/handoff/macos/HANDOFF_2026-09-07.md`](../product/handoff/macos/HANDOFF_2026-09-07.md)
@@ -29,7 +28,7 @@
 - 実装は小さく分割し、対象外のリファクタリングを避ける。
 - 検証可能な作業では `npm run lint`、`npm run build`、Prisma コマンドなど、適切な確認を行う。
 - 検証できない場合は、実行したコマンドと失敗理由を報告する。
-- 長い調査、Worker task、`codex exec` の完了要約は `../product/summary/macos/` 配下へ残し、raw log や長い command output をメイン会話へ戻さない。
+- 長い調査や作業の完了要約は `../product/summary/macos/` 配下へ残し、raw log や長い command output をメイン会話へ戻さない。
 - 再開時は関連 summary を先に読み、`Next Read` に記載された最小ファイルだけを確認する。
 - 作業再開時は、最新の `HANDOFF_YYYY-MM-DD.md` を確認してから続きの作業を判断する。
 - 新しい `HANDOFF_YYYY-MM-DD.md` を作成した場合は、`AGENTS.md` の「最新引き継ぎ」を新しいファイルへ更新し、古い `HANDOFF_YYYY-MM-DD.md` は削除する。
@@ -103,19 +102,26 @@
   disposable paths, and treat any network exposure or authentication change as a
   separately reviewed product and security decision.
 
-## macOS Manager / Worker integration
+## 開発セッションの起動
 
-共通の Manager / Worker 方針は [`product/development/AGENTS.md`](../product/development/AGENTS.md) を正本とします。macOS 側では、実装 repository を起動時のカレントディレクトリとして扱い、次の platform 固有の接続だけを管理します。
+共通の作業方針は [`product/development/AGENTS.md`](../product/development/AGENTS.md) を参照します。開発セッションはホームの共通基盤から起動します。
 
-- Manager はユーザーと相談して task を具体化し、`../product/development/codex-queue` に投入する。
-- Worker / Manager は、必要に応じて `../product/summary/macos/task-summary-template.md` の粒度で完了要約を残す。`../product/development/codex-queue/bin/worker-run.sh` 経由の task は完了/失敗時に最小 summary を自動作成する。
-- UI タスクは `../product/development/codex-queue/tasks-ui`、API タスクは `../product/development/codex-queue/tasks-api`、横断タスクは `../product/development/codex-queue/tasks` を使う。
+```sh
+cd ~
+make cornell codex
+# Claude を使う場合
+make cornell claude
+make cornell status
+make cornell stop
+```
+
+ユーザーと相談して task を具体化します。必要に応じて `../product/summary/macos/task-summary-template.md` の粒度で完了要約を残します。
 
 ### PR 作成ルール
 
 - PR は Draft ではなく、レビュー可能な Open 状態で作成する。
 - GitHub Issue の修正を含む PR では、修正した Issue ごとに PR 本文へ `Closes #[Issue番号]` を追加する。Issue の自動クローズ参照は PR 本文に記載する。
-- `../product/summary/macos/` 配下の Worker task summary は PR の変更ファイルに含めない。PR 作成前に summary ファイルをステージ対象から除外する。summary は product 側に残し、PR 本文の変更説明や Issue の自動クローズ参照の代わりにはしない。
+- `../product/summary/macos/` 配下の 作業要約 は PR の変更ファイルに含めない。PR 作成前に summary ファイルをステージ対象から除外する。summary は product 側に残し、PR 本文の変更説明や Issue の自動クローズ参照の代わりにはしない。
 
 ---
 

@@ -13,7 +13,6 @@
     "test:ts": "node --import tsx/esm --test \"test/**/*.test.ts\"",
     "test:desktop:lifecycle": "node --import tsx/esm --test test/desktop/desktop-lifecycle.test.ts",
     "test:desktop:node-runtime": "node --import tsx/esm --test test/desktop/desktop-node-runtime.test.ts",
-    "test:codex-queue": "node --import tsx/esm --test \"../product/development/codex-queue/test/*.test.ts\"",
     "test:e2e": "playwright test",
     "prisma:generate": "node scripts/prisma-generate.js",
     "prisma:generate:postgres": "node scripts/prisma-run-postgres.js generate",

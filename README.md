@@ -47,6 +47,10 @@ Gate 0 を発注者が明示的に閉じるまで、Phase 2、Mac desktop、PDF 
 
 `src/lib/backup/index.js` は既存 import 互換の再エクスポートであり、バックアップ実装の主入口として扱いません。
 
+## 開発セッションの起動
+
+ホームの共通基盤から `cd ~ && make cornell codex` または `cd ~ && make cornell claude` で起動します。状態確認は `cd ~ && make cornell status`、停止は `cd ~ && make cornell stop` を使います。作業方針は [`product/development/AGENTS.md`](../product/development/AGENTS.md) を参照します。
+
 ## セットアップ
 
 前提:
