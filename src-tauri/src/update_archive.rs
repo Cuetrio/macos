@@ -1869,7 +1869,7 @@ mod tests {
         let extracted = extract_verified_archive(&verified_archive, &root.path).expect("extract");
         let app_path = root.path.join(&extracted.relative_app_path);
         fs::remove_file(app_path.join("Contents/current")).expect("remove link");
-        std::os::unix::fs::symlink("MacOS/notebook", app_path.join("Contents/current"))
+        std::os::unix::fs::symlink("MacOS/other", app_path.join("Contents/current"))
             .expect("wrong link");
         assert_eq!(
             revalidate_extracted_archive_tree(&verified_archive, &extracted, &root.path),

@@ -1964,8 +1964,14 @@ fn recover_persisted_staged_migration_failure(state: &mut UpdateState, now: u64)
         .is_some_and(|candidate| candidate.verification_state == VerificationState::Verified);
     if state.status != UpdateStatus::Available
         || state.phase.is_some()
+        || state.check_started_at.is_some()
+        || state.restart_handoff.is_some()
         || !is_staged_failure
         || !has_verified_candidate
+        || state.recovery.as_ref().is_some_and(|checkpoint| {
+            checkpoint.stage != UpdateRecoveryStage::RollbackPending
+                || checkpoint.database_switched != Some(false)
+        })
     {
         return false;
     }
@@ -2109,7 +2115,8 @@ fn parse_state(contents: &[u8], now: u64) -> Result<ParsedState, UpdateStateLoad
         version if version == u64::from(UPDATE_STATE_SCHEMA_VERSION) => {
             let mut state = serde_json::from_value::<UpdateState>(value)
                 .map_err(|_| UpdateStateLoadIssue::Invalid)?;
-            let needs_migration = downgrade_unbound_verified_candidate(&mut state);
+            let needs_migration = downgrade_unbound_verified_candidate(&mut state)
+                || recover_persisted_staged_migration_failure(&mut state, now);
             state
                 .validate()
                 .map_err(|_| UpdateStateLoadIssue::Invalid)?;
@@ -3905,6 +3912,7 @@ mod tests {
         create_test_artifacts(&directory, TEST_DIGEST);
         record_test_verified(&store);
         let before = store.snapshot();
+        fs::remove_file(store.state_path()).unwrap();
         fs::create_dir(store.state_path()).unwrap();
 
         assert!(matches!(
