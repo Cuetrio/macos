@@ -11,10 +11,9 @@
 !.yarn/releases
 !.yarn/versions
 
-# Historical native acceptance build outputs and isolated user data
-/test/png-native-acceptance-20261022/run-02/cargo-target/
-/test/png-native-acceptance-20261022/run-02/next/
-/test/png-native-acceptance-20261022/run-02/home/
+# Local verification records (dated work directories and raw logs)
+/test/*-20[0-9][0-9][0-9][0-9][0-9][0-9]/
+/test/*.log
 
 # testing
 /coverage
