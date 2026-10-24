@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { NoteDetailResponse } from "@/modules/notes/contracts";
 import { noteDetailToSummaryUpdatePayload } from "@/modules/notes/model";
 import { NotesRemoteError, updateNote } from "@/modules/notes/remote";
@@ -59,8 +59,6 @@ export function useNoteDetailSummaryDraft({
   const summaryDiscardRef = useRef<() => boolean>(() => false);
 
   const summaryDirty = summaryDraft !== (note.summary ?? "");
-  noteRef.current = note;
-  summaryDraftRef.current = summaryDraft;
 
   function discardSummaryDraft(nextSummary = noteRef.current.summary ?? "") {
     if (summarySavingRef.current) {
@@ -169,9 +167,13 @@ export function useNoteDetailSummaryDraft({
     return true;
   }
 
-  summaryDirtyRef.current = summaryDirty;
-  summarySaveRef.current = saveSummary;
-  summaryDiscardRef.current = discardSummaryDraft;
+  useLayoutEffect(() => {
+    noteRef.current = note;
+    summaryDraftRef.current = summaryDraft;
+    summaryDirtyRef.current = summaryDirty;
+    summarySaveRef.current = saveSummary;
+    summaryDiscardRef.current = discardSummaryDraft;
+  });
 
   useEffect(() => {
     mountedRef.current = true;

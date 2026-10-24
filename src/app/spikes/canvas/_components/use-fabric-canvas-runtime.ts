@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type MutableRefObject } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type MutableRefObject } from "react";
 import { CANVAS_PAGE, type CanvasDocumentV1 } from "@/shared/canvas";
 import {
   fabricCanvasToDocument,
@@ -54,8 +54,10 @@ export function useFabricCanvasRuntime({
   const applyZoomRef = useRef<() => void>(() => undefined);
   const [ready, setReady] = useState(false);
 
-  toolRef.current = tool;
-  textRef.current = text;
+  useLayoutEffect(() => {
+    toolRef.current = tool;
+    textRef.current = text;
+  }, [tool, text]);
 
   const removePreview = useCallback(() => {
     const canvas = canvasRef.current;

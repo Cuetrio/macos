@@ -19,8 +19,29 @@ const ED25519_SIGNATURE_BYTES: usize = 64;
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(crate) enum TrustedKeyStatus {
     Current,
+    #[cfg_attr(
+        not(test),
+        expect(
+            dead_code,
+            reason = "embedded key table constructs only Current; tests require Next key acceptance"
+        )
+    )]
     Next,
+    #[cfg_attr(
+        not(test),
+        expect(
+            dead_code,
+            reason = "embedded key table constructs only Current; tests require distinct Retired key rejection"
+        )
+    )]
     Retired,
+    #[cfg_attr(
+        not(test),
+        expect(
+            dead_code,
+            reason = "embedded key table constructs only Current; tests require distinct Revoked key rejection"
+        )
+    )]
     Revoked,
 }
 

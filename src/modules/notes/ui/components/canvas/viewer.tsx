@@ -29,20 +29,16 @@ function errorMessage(error: unknown) {
 
 export function NoteCanvasViewer({ document }: NoteCanvasViewerProps) {
   const { resolvedTheme } = useTheme();
-  const documentRef = useRef<CanvasDocumentV1 | null | undefined>(undefined);
-  if (documentRef.current === undefined) {
-    if (!document) {
-      documentRef.current = null;
-    } else {
-      try {
-        documentRef.current = cloneCanvasDocument(document);
-      } catch {
-        documentRef.current = null;
-      }
+  const [initialDocumentSnapshot] = useState<CanvasDocumentV1 | null>(() => {
+    if (!document) return null;
+    try {
+      return cloneCanvasDocument(document);
+    } catch {
+      return null;
     }
-  }
+  });
 
-  const validDocument = documentRef.current ?? EMPTY_CANVAS_DOCUMENT;
+  const validDocument = initialDocumentSnapshot ?? EMPTY_CANVAS_DOCUMENT;
   const pageWidth = validDocument.page.width;
   const pageHeight = validDocument.page.height;
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -53,7 +49,7 @@ export function NoteCanvasViewer({ document }: NoteCanvasViewerProps) {
   const [error, setError] = useState<string | null>(
     !document
       ? "Canvas documentがありません。保存済みデータは変更されていません。"
-      : documentRef.current === null
+      : initialDocumentSnapshot === null
         ? "Canvas documentが壊れているため表示できません。保存済みデータは変更されていません。"
         : null,
   );
@@ -63,7 +59,7 @@ export function NoteCanvasViewer({ document }: NoteCanvasViewerProps) {
     let canvas: FabricCanvasLike | null = null;
 
     async function initialize() {
-      if (documentRef.current === null) return;
+      if (initialDocumentSnapshot === null) return;
 
       try {
         const fabricModule = (await import("fabric")) as unknown as FabricApiLike;
@@ -113,7 +109,7 @@ export function NoteCanvasViewer({ document }: NoteCanvasViewerProps) {
       canvas = null;
       canvasRef.current = null;
     };
-  }, [pageHeight, pageWidth, validDocument]);
+  }, [initialDocumentSnapshot, pageHeight, pageWidth, validDocument]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -162,7 +158,7 @@ export function NoteCanvasViewer({ document }: NoteCanvasViewerProps) {
         </p>
       )}
 
-      {documentRef.current !== null && (
+      {initialDocumentSnapshot !== null && (
         <NoteCanvasSurface
           mode="viewer"
           pageDimensions={{ width: pageWidth, height: pageHeight }}

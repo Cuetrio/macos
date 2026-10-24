@@ -4,6 +4,7 @@ mod diagnostics;
 mod instance;
 mod lifecycle;
 mod menu;
+mod png_export;
 mod runtime;
 mod update_apply;
 mod update_archive;
@@ -68,7 +69,9 @@ const PRIMARY_WINDOW_LABEL: &str = "primary";
 const PRIMARY_WINDOW_TITLE: &str = "Cuetrio";
 const DEFAULT_WINDOW_WIDTH: f64 = 1280.0;
 const DEFAULT_WINDOW_HEIGHT: f64 = 900.0;
+#[cfg(any(test, feature = "diagnostic-web-inspector"))]
 const DIAGNOSTIC_WEB_INSPECTOR_ENV: &str = "CORNELL_DESKTOP_DIAGNOSTIC_WEB_INSPECTOR";
+#[cfg(any(test, feature = "diagnostic-web-inspector"))]
 const DIAGNOSTIC_WEB_INSPECTOR_OPT_IN: &str = "1";
 
 type AppResult<T> = Result<T, String>;
@@ -77,6 +80,7 @@ fn boxed_error(message: String) -> Box<dyn std::error::Error> {
     Box::new(std::io::Error::other(message))
 }
 
+#[cfg(any(test, feature = "diagnostic-web-inspector"))]
 fn has_explicit_diagnostic_web_inspector_opt_in(value: Option<&str>) -> bool {
     value == Some(DIAGNOSTIC_WEB_INSPECTOR_OPT_IN)
 }
@@ -396,6 +400,7 @@ fn run_application(instance: InstanceGuard) -> AppResult<()> {
                 .map_err(|error| boxed_error(error.to_string()))?;
             app.manage(storage.clone());
             app.manage(DesktopFileSelectionStore::default());
+            app.manage(png_export::PngExportStore::default());
             app.manage(DiagnosticsState::new(storage.logs_directory().to_path_buf()));
             let staging_directory = storage.staging_directory();
             let update_state =
@@ -502,6 +507,7 @@ fn run_application(instance: InstanceGuard) -> AppResult<()> {
                 PRIMARY_WINDOW_LABEL,
                 window_url,
             )
+            .initialization_script("window.__CORNELL_PNG_DESKTOP__ = true;")
             .title(PRIMARY_WINDOW_TITLE)
             .inner_size(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT)
             .resizable(true)

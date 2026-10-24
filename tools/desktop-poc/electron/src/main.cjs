@@ -493,7 +493,7 @@ if (!hasSingleInstanceLock) {
 
   async function runUiSmoke() {
     const primaryUrl = `http://${runtimeHost}:${runtimePort}/notes`;
-    const windowLoadStarted = nowMs();
+    nowMs();
     await loadPrimaryWindow(primaryUrl);
     const listStarted = nowMs();
     await waitForRendererFunction(
