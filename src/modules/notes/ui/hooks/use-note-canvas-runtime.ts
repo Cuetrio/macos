@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useTheme } from "@/app/_components/theme/theme-provider";
 import {
   cloneCanvasDocument,
@@ -105,7 +105,6 @@ export function useNoteCanvasRuntime(
   const flushShapeTextEditRef = useRef<() => void>(() => undefined);
   const cancelShapeTextEditRef = useRef<() => void>(() => undefined);
   const callbacksRef = useRef(options);
-  callbacksRef.current = options;
   const [ready, setReady] = useState(false);
   const pageWidth = options.pageDimensions.width;
   const pageHeight = options.pageDimensions.height;
@@ -139,7 +138,10 @@ export function useNoteCanvasRuntime(
     },
     [],
   );
-  applyCanvasDimensionsRef.current = applyCanvasDimensions;
+  useLayoutEffect(() => {
+    callbacksRef.current = options;
+    applyCanvasDimensionsRef.current = applyCanvasDimensions;
+  }, [applyCanvasDimensions, options]);
 
   const syncCanvasToolState = useCallback(
     (canvas: FabricCanvasLike, tool: CanvasNoteTool) => {

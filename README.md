@@ -55,7 +55,7 @@ Gate 0 を発注者が明示的に閉じるまで、Phase 2、Mac desktop、PDF 
 
 前提:
 
-- Node.js
+- Node.js 24.22.1 LTS（`.nvmrc`）
 - npm
 
 依存関係をインストールします。

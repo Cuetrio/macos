@@ -1,4 +1,4 @@
-const fs = require("node:fs");
+require("node:fs");
 const path = require("node:path");
 const {
   CANDIDATE_ROOT,

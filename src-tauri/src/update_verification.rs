@@ -12,14 +12,13 @@ use crate::update_bundle::{
 };
 use crate::update_download::{
     download_and_verify_artifact, remove_invalid_cached_artifact, revalidate_cached_artifact,
-    ArtifactHttpTransport, ArtifactSignatureVerifier, ArtifactSignatureVerifierFactory,
+    ArtifactHttpTransport, ArtifactSignatureVerifierFactory,
     CachedArtifact, PackageDownloadError, VerifiedArchiveHandle,
 };
 use crate::update_manifest::{UpdateManifest, UpdateRelease, MANIFEST_PRODUCT_ID};
 use crate::update_provider::{fetch_manifest, ManifestHttpTransport};
 use crate::update_selection::{select_update, UpdateSelection};
 use crate::update_signature::signed_release_identity_sha256;
-use crate::update_signature::EmbeddedTrustedKeyStore;
 use crate::update_state::{
     PendingUpdate, UpdateState, UpdateStateError, UpdateStateSnapshot, UpdateStateStore,
     UpdateStatus,
@@ -722,13 +721,14 @@ fn map_bundle_error(error: BundleValidationError) -> &'static str {
 mod tests {
     use super::*;
     use crate::update_download::{
-        ArtifactHttpError, ArtifactHttpRequest, ArtifactHttpResponse, VerifiedArchive,
+        ArtifactHttpError, ArtifactHttpRequest, ArtifactHttpResponse, ArtifactSignatureVerifier,
+        VerifiedArchive,
     };
     use crate::update_manifest::{MacOsVersion, SemVer, TARGET_ARCHITECTURE, TARGET_CHANNEL};
     use crate::update_provider::{
         ManifestHttpError, ManifestHttpRequest, ManifestHttpResponse, GITHUB_RELEASES_MANIFEST_URL,
     };
-    use crate::update_signature::SignatureVerificationError;
+    use crate::update_signature::{EmbeddedTrustedKeyStore, SignatureVerificationError};
     use crate::update_state::VerificationState;
     use std::cell::Cell;
     use std::fs;

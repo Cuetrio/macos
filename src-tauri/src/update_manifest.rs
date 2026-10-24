@@ -40,6 +40,7 @@ pub(crate) struct UpdateManifest {
 }
 
 impl UpdateManifest {
+    #[cfg(test)]
     pub(crate) fn is_no_update(&self) -> bool {
         self.releases.is_empty()
     }

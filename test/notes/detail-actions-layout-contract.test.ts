@@ -99,7 +99,7 @@ test("view and review actions are placed in the title row without duplicating th
   assert.match(modes, /<NoteDetailReviewModeActions[\s\S]*onBackToView=/);
   assert.match(
     modes,
-    /<NoteDetailEditActions onCancel=\{\(\) => leaveEditMode\(\)\} \/>/,
+    /<NoteDetailEditActions onCancel=\{\(\) => leaveEditMode\(\)\} pngAction=\{png\.action\} disabled=\{png\.busy\} \/>/,
   );
 
   assert.match(

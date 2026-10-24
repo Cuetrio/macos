@@ -60,6 +60,8 @@ function loadSummarySaveHarness() {
   const requests: Array<{ id: string; payload: unknown }> = [];
   const stateUpdates: unknown[] = [];
   const effectCleanups: Array<() => void> = [];
+  const layoutEffects: Array<() => (() => void) | undefined> = [];
+  const effects: Array<() => (() => void) | undefined> = [];
   const savedNotes: unknown[] = [];
   let resolveRequest: ((value: unknown) => void) | undefined;
   let rejectRequest: ((error: unknown) => void) | undefined;
@@ -78,11 +80,11 @@ function loadSummarySaveHarness() {
     useRef(initial: unknown) {
       return { current: initial };
     },
+    useLayoutEffect(effect: () => (() => void) | undefined) {
+      layoutEffects.push(effect);
+    },
     useEffect(effect: () => (() => void) | undefined) {
-      const cleanup = effect();
-      if (typeof cleanup === "function") {
-        effectCleanups.push(cleanup);
-      }
+      effects.push(effect);
     },
   };
   const note = {
@@ -119,6 +121,12 @@ function loadSummarySaveHarness() {
     note,
     onSavedNote: (savedNote: unknown) => savedNotes.push(savedNote),
   });
+  for (const effect of [...layoutEffects, ...effects]) {
+    const cleanup = effect();
+    if (typeof cleanup === "function") {
+      effectCleanups.push(cleanup);
+    }
+  }
 
   return {
     bridge,

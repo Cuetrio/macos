@@ -14,11 +14,10 @@ use std::sync::{mpsc, Arc, Mutex};
 use std::thread;
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
+#[cfg(all(unix, any(test, not(debug_assertions))))]
+use std::os::unix::fs::PermissionsExt;
 #[cfg(unix)]
-use std::os::unix::{
-    fs::PermissionsExt,
-    process::{CommandExt, ExitStatusExt},
-};
+use std::os::unix::process::{CommandExt, ExitStatusExt};
 
 use tauri::{AppHandle, Manager};
 
@@ -215,10 +214,6 @@ impl StorageLayout {
 
     pub(crate) fn logs_directory(&self) -> &Path {
         &self.logs_directory
-    }
-
-    pub(crate) fn database_url(&self) -> &str {
-        &self.database_url
     }
 }
 
@@ -1447,6 +1442,7 @@ pub(crate) fn packaged_runtime_root(bundle_root: &Path) -> AppResult<PathBuf> {
         .join(PACKAGED_RUNTIME_DIRECTORY_NAME))
 }
 
+#[cfg(any(test, not(debug_assertions)))]
 fn packaged_node_binary(root: &Path) -> AppResult<PathBuf> {
     let path = root.join(PACKAGED_NODE_BINARY_NAME);
     let metadata = fs::metadata(&path).map_err(|error| {
@@ -1605,11 +1601,6 @@ pub(crate) enum BootstrapOutcome {
         recovery_snapshot: Option<DesktopDatabaseRecoverySnapshot>,
     },
     Recovery(DesktopDatabaseRecoverySnapshot),
-}
-
-pub(crate) fn run_bootstrap(root: &Path) -> Result<BootstrapOutcome, DesktopStorageBootstrapError> {
-    let storage = resolve_storage_layout(root)?;
-    run_bootstrap_with_storage(root, &storage)
 }
 
 fn launcher_command(

@@ -9,7 +9,6 @@ const {
   ensureOutputDirectories,
   fixtureReadBack,
   getContext,
-  relativeOutputPath,
   revisionProvenance,
   sha256FileSync,
   validateBaseline,

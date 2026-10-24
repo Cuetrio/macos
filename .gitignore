@@ -11,6 +11,11 @@
 !.yarn/releases
 !.yarn/versions
 
+# Historical native acceptance build outputs and isolated user data
+/test/png-native-acceptance-20261022/run-02/cargo-target/
+/test/png-native-acceptance-20261022/run-02/next/
+/test/png-native-acceptance-20261022/run-02/home/
+
 # testing
 /coverage
 /playwright-report/

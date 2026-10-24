@@ -1325,6 +1325,37 @@ fn start_external_verify_pending_update(app: AppHandle, target_url: tauri::Url) 
     });
 }
 
+fn is_png_export_navigation(url: &tauri::Url, primary_url: &tauri::Url) -> bool {
+    is_close_bridge_navigation(url, primary_url)
+        && url
+            .path()
+            .strip_prefix("/notes/")
+            .is_some_and(|id| !id.is_empty() && id != "new" && !id.contains('/'))
+}
+
+fn start_external_png_export(
+    app: AppHandle,
+    target_url: tauri::Url,
+    request: crate::png_export::Request,
+) {
+    let _ = tauri::async_runtime::spawn_blocking(move || {
+        let Some(store) = app.try_state::<crate::png_export::PngExportStore>() else {
+            return;
+        };
+        let mut page_url = target_url.clone();
+        page_url.set_fragment(None);
+        let response = store.run(request, page_url.as_str());
+        let Ok(Some(script)) =
+            loopback_result_script::<_, ()>(Ok(response), &target_url, crate::png_export::EVENT)
+        else {
+            return;
+        };
+        if let Some(window) = app.get_webview_window(PRIMARY_WINDOW_LABEL) {
+            let _ = window.eval(&script);
+        }
+    });
+}
+
 pub(crate) fn handle_navigation(
     url: &tauri::Url,
     close: &CloseCoordinator,
@@ -1346,6 +1377,14 @@ pub(crate) fn handle_navigation(
     }
 
     if let Some(fragment) = url.fragment() {
+        if let Some(encoded) = fragment.strip_prefix(crate::png_export::FRAGMENT) {
+            if is_png_export_navigation(url, primary_url) {
+                if let Ok(request) = crate::png_export::parse(encoded) {
+                    start_external_png_export(app.clone(), url.clone(), request);
+                }
+            }
+            return false;
+        }
         if is_manual_update_check_bridge_fragment(fragment) {
             if is_manual_update_check_navigation(url, primary_url) {
                 start_external_manual_update_check(app.clone(), url.clone());
@@ -1378,6 +1417,47 @@ pub(crate) fn handle_navigation(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn png_export_bridge_is_limited_to_saved_notes_on_the_primary_loopback_origin() {
+        let primary = tauri::Url::parse("http://127.0.0.1:43127/notes").unwrap();
+        for path in ["/notes/fixture", "/notes/fixture?mode=edit"] {
+            let url = primary.join(path).unwrap();
+            assert!(is_png_export_navigation(&url, &primary));
+        }
+        for address in [
+            "http://127.0.0.1:43128/notes/fixture",
+            "http://localhost:43127/notes/fixture",
+            "https://127.0.0.1:43127/notes/fixture",
+            "http://127.0.0.1:43127/notes/new",
+            "http://127.0.0.1:43127/notes",
+            "http://127.0.0.1:43127/backup",
+            "http://127.0.0.1:43127/api/notes/fixture",
+            "http://127.0.0.1:43127/notes/fixture/extra",
+        ] {
+            assert!(!is_png_export_navigation(
+                &tauri::Url::parse(address).unwrap(),
+                &primary,
+            ));
+        }
+        let response = crate::png_export::PngExportStore::default().run(
+            crate::png_export::Request::Discard {
+                id: "fixture".into(),
+                token: "not-a-selection".into(),
+            },
+            "page",
+        );
+        let script = loopback_result_script::<_, ()>(
+            Ok(response),
+            &primary.join("/notes/fixture?mode=edit").unwrap(),
+            crate::png_export::EVENT,
+        )
+        .unwrap()
+        .unwrap();
+        assert!(script.contains(crate::png_export::EVENT));
+        assert!(!script.contains("not-a-selection"));
+        assert!(!script.contains("path:"));
+    }
 
     #[test]
     fn close_decision_preserves_the_three_dirty_outcomes() {

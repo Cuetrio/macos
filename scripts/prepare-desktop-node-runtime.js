@@ -219,7 +219,7 @@ function npmCommand() {
 }
 
 function installProductionRuntime(projectRoot, runtimeDirectory) {
-  const projectPackagePath = path.join(projectRoot, "package.json");
+  path.join(projectRoot, "package.json");
   const projectLockPath = path.join(projectRoot, "package-lock.json");
   const runtimePackagePath = path.join(runtimeDirectory, DESKTOP_RUNTIME_PACKAGE_FILE);
   const runtimeLockPath = path.join(runtimeDirectory, "package-lock.json");

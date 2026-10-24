@@ -195,7 +195,7 @@ function main() {
   const runStage = (name, relativeEvidence) => {
     const code = run("npm", ["run", name], { cwd: candidateRoot, env });
     const report = readReport(outputRoot, relativeEvidence);
-    const result = stageResult(results, name, report);
+    stageResult(results, name, report);
     printFailureDiagnostics(outputRoot, name.replace(/^poc:/, ""));
     if (code !== 0) unexpected.push(`${name}: npm exit ${code}`);
     return report;

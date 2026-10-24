@@ -428,6 +428,7 @@ function DataAndBackupPanel() {
     .slice(0, 1);
 
   useEffect(() => {
+    mountedRef.current = true;
     return () => {
       mountedRef.current = false;
     };

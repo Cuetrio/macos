@@ -87,7 +87,7 @@ pub(crate) struct DiagnosticExportResponse {
     pub(crate) ok: bool,
     pub(crate) selection: Option<DiagnosticSelectionMetadata>,
     pub(crate) error_code: Option<&'static str>,
-    pub(crate) result: Option<DiagnosticExportResult>,
+    result: Option<DiagnosticExportResult>,
 }
 
 #[derive(Clone, Debug, Deserialize)]
@@ -524,6 +524,7 @@ impl LocalLogWriter {
         }
     }
 
+    #[cfg(test)]
     fn append_failure(
         &self,
         component: &str,

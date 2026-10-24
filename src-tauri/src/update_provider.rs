@@ -540,6 +540,13 @@ impl std::error::Error for ManifestProviderError {}
 pub(crate) enum ManifestHttpError {
     Network,
     Timeout,
+    #[cfg_attr(
+        not(test),
+        expect(
+            dead_code,
+            reason = "current transport maps TLS failures to Network; tests retain explicit TLS provider mapping"
+        )
+    )]
     Tls,
     Redirect,
     ContentType,
@@ -760,11 +767,6 @@ impl ReqwestManifestHttpTransport {
             });
         }
     }
-}
-
-pub(crate) fn fetch_manifest_from_github() -> Result<UpdateManifest, ManifestProviderError> {
-    let transport = ReqwestManifestHttpTransport::new()?;
-    fetch_manifest(&transport)
 }
 
 pub(crate) fn fetch_manifest<T: ManifestHttpTransport + ?Sized>(
