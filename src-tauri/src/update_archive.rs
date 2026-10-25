@@ -5,7 +5,7 @@ use std::io::{self, BufRead, BufReader, Read, Seek, SeekFrom, Write};
 use std::path::{Component, Path, PathBuf};
 
 use flate2::bufread::GzDecoder;
-use tar::{Archive, EntryType};
+use tar::Archive;
 
 use crate::update_download::{PackageDownloadError, VerifiedArchiveHandle};
 
@@ -1573,7 +1573,7 @@ mod tests {
     use ring::digest::{digest, SHA256};
     use std::sync::atomic::{AtomicU64, Ordering};
     use std::time::{SystemTime, UNIX_EPOCH};
-    use tar::{Builder, Header};
+    use tar::{Builder, EntryType, Header};
 
     static NEXT_ROOT: AtomicU64 = AtomicU64::new(0);
 

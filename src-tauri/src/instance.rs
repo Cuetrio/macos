@@ -477,18 +477,6 @@ fn request_focus_once(socket_path: &Path, timeout: Duration) -> FocusAttempt {
     }
 }
 
-fn request_focus(socket_path: &Path) -> bool {
-    for attempt in 0..FOCUS_RETRY_COUNT {
-        if request_focus_once(socket_path, FOCUS_RETRY_DELAY) == FocusAttempt::Focused {
-            return true;
-        }
-        if attempt + 1 < FOCUS_RETRY_COUNT {
-            thread::sleep(FOCUS_RETRY_DELAY);
-        }
-    }
-    false
-}
-
 fn focus_socket_status(socket_path: &Path, timeout: Duration) -> FocusSocketStatus {
     match UnixStream::connect(socket_path) {
         Ok(stream) => match focus_response(stream, timeout) {
@@ -662,6 +650,18 @@ mod tests {
     use super::*;
     use std::sync::{Arc, Barrier};
     use std::time::{Instant, SystemTime, UNIX_EPOCH};
+
+    fn request_focus(socket_path: &Path) -> bool {
+        for attempt in 0..FOCUS_RETRY_COUNT {
+            if request_focus_once(socket_path, FOCUS_RETRY_DELAY) == FocusAttempt::Focused {
+                return true;
+            }
+            if attempt + 1 < FOCUS_RETRY_COUNT {
+                thread::sleep(FOCUS_RETRY_DELAY);
+            }
+        }
+        false
+    }
 
     fn test_directory(_label: &str) -> PathBuf {
         let suffix = INSTANCE_OWNER_TEMP_COUNTER.fetch_add(1, Ordering::Relaxed);

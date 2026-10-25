@@ -9,7 +9,6 @@ const {
   readJson,
   relativeOutputPath,
   revisionProvenance,
-  validateBaseline,
   writeFailureSummary,
   writeJsonOwned,
 } = require("./common.cjs");

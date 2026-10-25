@@ -34,13 +34,15 @@ function NoteDetailHeadingActions({ children }: { children: ReactNode }) {
   );
 }
 
-export function NoteDetailEditActions({ onCancel }: { onCancel: () => void }) {
+export function NoteDetailEditActions({ onCancel, pngAction, disabled = false }: { onCancel: () => void; pngAction?: ReactNode; disabled?: boolean }) {
   return (
     <NoteDetailHeadingActions>
+      {pngAction}
       <button
         type="button"
         onClick={onCancel}
-        className="rounded-lg border border-stone-300 px-3 py-1.5 text-sm font-medium text-stone-700 transition hover:bg-stone-50/60"
+        disabled={disabled}
+        className="rounded-lg border border-stone-300 px-3 py-1.5 text-sm font-medium text-stone-700 transition hover:bg-stone-50/60 disabled:opacity-60"
       >
         キャンセル
       </button>
@@ -73,19 +75,24 @@ type NoteDetailViewModeActionsProps = {
   onEdit: () => void;
   onReview: () => void;
   disabled?: boolean;
+  editDisabled?: boolean;
+  pngAction?: ReactNode;
 };
 
 export function NoteDetailViewActions({
   onEdit,
   onReview,
   disabled = false,
+  editDisabled = false,
+  pngAction,
 }: NoteDetailViewModeActionsProps) {
   return (
     <NoteDetailHeadingActions>
       <div className="flex min-w-0 flex-wrap justify-end gap-2">
+        {pngAction}
         <button
           type="button"
-          disabled={disabled}
+          disabled={disabled || editDisabled}
           onClick={onEdit}
           className="rounded-lg border border-stone-300 px-3 py-1.5 text-sm font-medium text-stone-700 transition hover:bg-stone-50/60"
         >

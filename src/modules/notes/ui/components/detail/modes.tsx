@@ -21,6 +21,7 @@ import {
 } from "./actions";
 import { NoteEditor } from "../editor/editor";
 import { NoteDetailReadView } from "./read-view";
+import { useCanvasPngExport } from "./png-export";
 
 type Mode = "view" | "edit" | "review";
 type UrlMode = Exclude<Mode, "review">;
@@ -112,6 +113,24 @@ export function NoteDetailModes({
   const reviewingRef = useRef(false);
   const bodyConfirmedRef = useRef(false);
   const summaryConfirmedRef = useRef(false);
+  const modeUrlNavigationRef = useRef<string | null>(null);
+  const deferredViewUrlRef = useRef(false);
+  // Always use the saved note; editor and Summary drafts are not export inputs.
+  const png = useCanvasPngExport(note, {
+    canStart: () => modeUrlNavigationRef.current === null,
+    onSettled: () => {
+      if (deferredViewUrlRef.current) {
+        deferredViewUrlRef.current = false;
+        replaceModeUrl("view");
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (modeUrlNavigationRef.current === searchParams.toString()) {
+      modeUrlNavigationRef.current = null;
+    }
+  });
 
   function replaceModeUrl(nextMode: UrlMode) {
     const nextSearchParams = new URLSearchParams(searchParams.toString());
@@ -123,11 +142,13 @@ export function NoteDetailModes({
     }
 
     const query = nextSearchParams.toString();
+    // Reserve navigation synchronously, before React can render new callbacks.
+    modeUrlNavigationRef.current = query;
     router.replace(query ? `${pathname}?${query}` : pathname);
   }
 
   function enterEditMode() {
-    if (isSummarySaving()) {
+    if (isSummarySaving() || png.isBusy() || modeUrlNavigationRef.current !== null) {
       return;
     }
 
@@ -137,14 +158,24 @@ export function NoteDetailModes({
     setMode("edit");
   }
 
-  function leaveEditMode(nextSummary = note.summary ?? "") {
-    if (isSummarySaving()) {
+  function finishEditMode(nextSummary: string) {
+    discardSummaryDraft(nextSummary);
+    setMode("view");
+    // An accepted save exits the editor immediately, but an older PNG still
+    // needs its original page/query until publication or discard has settled.
+    if (png.isBusy()) {
+      deferredViewUrlRef.current = true;
+    } else {
+      replaceModeUrl("view");
+    }
+  }
+
+  function leaveEditMode() {
+    if (isSummarySaving() || png.isBusy() || modeUrlNavigationRef.current !== null) {
       return;
     }
 
-    discardSummaryDraft(nextSummary);
-    replaceModeUrl("view");
-    setMode("view");
+    finishEditMode(note.summary ?? "");
   }
 
   async function performReviewCompletion(
@@ -334,12 +365,12 @@ export function NoteDetailModes({
       nextReviewDate: note.nextReviewDate ?? "",
     };
 
-    return (
+    return <>
       <NoteEditor
         mode="edit"
         initial={editorInitial}
         topActions={
-          <NoteDetailEditActions onCancel={() => leaveEditMode()} />
+          <NoteDetailEditActions onCancel={() => leaveEditMode()} pngAction={png.action} disabled={png.busy} />
         }
         showCancel={false}
         onCancel={() => leaveEditMode()}
@@ -351,13 +382,14 @@ export function NoteDetailModes({
           setShowBody(false);
           setShowSummary(false);
           setError(null);
-          leaveEditMode(savedNote.summary ?? "");
+          finishEditMode(savedNote.summary ?? "");
         }}
       />
-    );
+      {png.feedback}
+    </>;
   }
 
-  return (
+  return <>
     <NoteDetailReadView
       note={note}
       mode={mode}
@@ -424,6 +456,8 @@ export function NoteDetailModes({
           />
         ) : (
           <NoteDetailViewActions
+            pngAction={png.action}
+            editDisabled={png.busy}
             disabled={summarySaving}
             onEdit={enterEditMode}
             onReview={() => {
@@ -473,5 +507,6 @@ export function NoteDetailModes({
         />
       )}
     </NoteDetailReadView>
-  );
+    {png.feedback}
+  </>;
 }

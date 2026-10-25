@@ -11,6 +11,10 @@
 !.yarn/releases
 !.yarn/versions
 
+# Local verification records (dated work directories and raw logs)
+/test/*-20[0-9][0-9][0-9][0-9][0-9][0-9]/
+/test/*.log
+
 # testing
 /coverage
 /playwright-report/

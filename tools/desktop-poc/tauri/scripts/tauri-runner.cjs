@@ -6,19 +6,16 @@ const { spawn } = require("node:child_process");
 const {
   CANDIDATE_ROOT,
   ensureDirectory,
-  getContext,
   relativeOutputPath,
 } = require("./common.cjs");
 const {
   canUseProcessGroupSignal,
   isPositivePid,
   observeDescendantClosure,
-  readProcessTable,
   sameProcessIdentity,
   PROCESS_GROUP_SIGNAL_METHOD,
   signalProcessGroup,
   signalProcessTree,
-  validateDedicatedProcessGroup,
   waitForProcessTreeExit,
 } = require("./process-tree.cjs");
 

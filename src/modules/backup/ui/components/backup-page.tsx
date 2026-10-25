@@ -228,19 +228,29 @@ export function BackupPage() {
   }, [requestBackupRecovery]);
 
   useEffect(() => {
-    const navigation = consumeBackupRecoveryNavigation();
-    if (navigation?.status === "ready") {
-      skipRecoveryForNavigationRef.current = true;
-      setSuccess("デスクトップの復旧を試しました。もう一度お試しください。");
-    } else if (navigation?.status === "not-recovered") {
-      skipRecoveryForNavigationRef.current = true;
-      navigationErrorRef.current = stableBackupErrorMessage(navigation.reason);
+    let disposed = false;
+    isMountedRef.current = true;
+
+    async function initialize() {
+      // A cancelled mount must not consume the navigation signal or start a GET.
+      await Promise.resolve();
+      if (disposed) return;
+
+      const navigation = consumeBackupRecoveryNavigation();
+      if (navigation?.status === "ready") {
+        skipRecoveryForNavigationRef.current = true;
+        setSuccess("デスクトップの復旧を試しました。もう一度お試しください。");
+      } else if (navigation?.status === "not-recovered") {
+        skipRecoveryForNavigationRef.current = true;
+        navigationErrorRef.current = stableBackupErrorMessage(navigation.reason);
+      }
+
+      await loadBackups();
     }
 
-    isMountedRef.current = true;
-    void loadBackups();
-
+    void initialize();
     return () => {
+      disposed = true;
       isMountedRef.current = false;
       backupsRequestIdRef.current += 1;
       createRequestIdRef.current += 1;

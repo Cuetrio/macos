@@ -741,10 +741,6 @@ impl UpdateStateStore {
         }
     }
 
-    pub(crate) fn state_path(&self) -> &Path {
-        &self.state_path
-    }
-
     pub(crate) fn load_issue(&self) -> Option<UpdateStateLoadIssue> {
         self.load_issue
     }
@@ -858,22 +854,6 @@ impl UpdateStateStore {
             .lock()
             .map(|state| UpdateStateSnapshot::from(&*state))
             .map_err(|_| UpdateStateError::LockPoisoned)
-    }
-
-    pub(crate) fn can_start_check(
-        &self,
-        trigger: CheckTrigger,
-        now: u64,
-    ) -> Result<bool, UpdateStateError> {
-        self.ensure_writable()?;
-        let state = self.lock_state()?;
-        if state.status == UpdateStatus::Checking {
-            return Ok(false);
-        }
-        if trigger == CheckTrigger::Manual {
-            return Ok(true);
-        }
-        Ok(automatic_check_is_due(&state, now))
     }
 
     pub(crate) fn begin_check(
@@ -1135,40 +1115,6 @@ impl UpdateStateStore {
         Ok(())
     }
 
-    pub(crate) fn claim_pending_notification(&self, now: u64) -> Result<bool, UpdateStateError> {
-        self.ensure_writable()?;
-        let _transition = self.lock_transition()?;
-        let mut state = self.lock_state()?;
-        let Some(pending_update) = state.pending_update.clone() else {
-            return Ok(false);
-        };
-        if state.status != UpdateStatus::Available {
-            return Ok(false);
-        }
-        if state
-            .notification
-            .as_ref()
-            .is_some_and(|notification| pending_update.notification_key_matches(notification))
-        {
-            return Ok(false);
-        }
-
-        let previous = state.clone();
-        state.notification = Some(UpdateNotification {
-            version: pending_update.version,
-            artifact: pending_update.artifact,
-            notified_at: now,
-        });
-        let next = state.clone();
-        drop(state);
-        if let Err(error) = write_state_atomically(&self.state_path, &next) {
-            let mut state = self.lock_state()?;
-            *state = previous;
-            return Err(error);
-        }
-        Ok(true)
-    }
-
     fn mutate_check_result<F>(&self, mutation: F) -> Result<(), UpdateStateError>
     where
         F: FnOnce(&mut UpdateState) -> Result<(), UpdateStateError>,
@@ -1312,28 +1258,6 @@ impl UpdateStateStore {
         }
         let mut state = self.lock_state()?;
         *state = next;
-        Ok(())
-    }
-
-    pub(crate) fn set_phase(&self, phase: UpdatePhase) -> Result<(), UpdateStateError> {
-        self.ensure_writable()?;
-        let _transition = self.lock_transition()?;
-        let mut state = self.lock_state()?;
-        if state.status != UpdateStatus::Checking {
-            return Err(UpdateStateError::Invalid(
-                "update phase has no active operation".to_string(),
-            ));
-        }
-
-        let previous = state.clone();
-        state.phase = Some(phase);
-        let next = state.clone();
-        drop(state);
-        if let Err(error) = write_state_atomically(&self.state_path, &next) {
-            let mut state = self.lock_state()?;
-            *state = previous;
-            return Err(error);
-        }
         Ok(())
     }
 
@@ -2716,6 +2640,63 @@ fn write_state_atomically(path: &Path, state: &UpdateState) -> Result<(), Update
     result.map_err(|error| {
         UpdateStateError::Storage(format!("update state atomic write failed: {error}"))
     })
+}
+
+#[cfg(test)]
+impl UpdateStateStore {
+    pub(crate) fn state_path(&self) -> &Path {
+        &self.state_path
+    }
+
+    pub(crate) fn can_start_check(
+        &self,
+        trigger: CheckTrigger,
+        now: u64,
+    ) -> Result<bool, UpdateStateError> {
+        self.ensure_writable()?;
+        let state = self.lock_state()?;
+        if state.status == UpdateStatus::Checking {
+            return Ok(false);
+        }
+        if trigger == CheckTrigger::Manual {
+            return Ok(true);
+        }
+        Ok(automatic_check_is_due(&state, now))
+    }
+
+    pub(crate) fn claim_pending_notification(&self, now: u64) -> Result<bool, UpdateStateError> {
+        self.ensure_writable()?;
+        let _transition = self.lock_transition()?;
+        let mut state = self.lock_state()?;
+        let Some(pending_update) = state.pending_update.clone() else {
+            return Ok(false);
+        };
+        if state.status != UpdateStatus::Available {
+            return Ok(false);
+        }
+        if state
+            .notification
+            .as_ref()
+            .is_some_and(|notification| pending_update.notification_key_matches(notification))
+        {
+            return Ok(false);
+        }
+
+        let previous = state.clone();
+        state.notification = Some(UpdateNotification {
+            version: pending_update.version,
+            artifact: pending_update.artifact,
+            notified_at: now,
+        });
+        let next = state.clone();
+        drop(state);
+        if let Err(error) = write_state_atomically(&self.state_path, &next) {
+            let mut state = self.lock_state()?;
+            *state = previous;
+            return Err(error);
+        }
+        Ok(true)
+    }
 }
 
 #[cfg(test)]
