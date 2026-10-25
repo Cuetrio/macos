@@ -30,4 +30,4 @@
 - Target Architecture: `../product/doc/macos/technical/TARGET_ARCHITECTURE.md`
 - 実装状況: `../product/doc/macos/implementation/IMPLEMENTATION_STATUS.md`
 - テスト観点: `../product/doc/macos/testing/TEST_SCENARIOS.md`
-- 製品ロードマップ: `AGENTS.md`
+- 製品ロードマップ: `../product/doc/common/requirements/PRODUCT_SPEC.md`
